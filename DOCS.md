@@ -10,7 +10,8 @@ EVTV Tesla module pack (2-line 12S) and Enphase site meters.
 - Home Assistant OS with Supervisor
 - `tesla_evtv_bms` custom integration configured (UDP CAN broadcast)
 - Optional: Enphase Envoy integration
-- Optional: `script.shutdown_car_charger` for the Stop charger button
+- `script.start_car_charger` / `script.shutdown_car_charger` (Tessie start/stop)
+- `script.notify_iphone` → Companion OS top banner (`notify.mobile_app_*`)
 
 ## Configuration
 
@@ -25,5 +26,5 @@ Uses a Home Assistant long-lived access token. Create under
 
 ## Network
 
-The browser connects to HA's WebSocket on the same host as the Ingress UI
+The browser connects to HA’s WebSocket on the same host as the Ingress UI
 (`ws://` / `wss://` + `/api/websocket`).
