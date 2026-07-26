@@ -1,0 +1,36 @@
+name: Sunny Island Detail
+version: "1.0.0"
+slug: sunny_island_detail
+description: >-
+  Live Sunny Island plant dashboard for HAOS — Tesla pack (EVTV BMS 2-line 12S),
+  Enphase solar/load, kWh meters, fault banner, and car-charger shutdown control.
+  Streams sensors over the Home Assistant WebSocket API.
+url: https://github.com/mobiletru/sunny_island_detail
+arch:
+  - aarch64
+  - amd64
+init: false
+boot: auto
+startup: application
+hassio_api: true
+homeassistant_api: true
+host_network: false
+ingress: true
+ingress_port: 8097
+panel_icon: mdi:solar-power-variant
+panel_title: Sunny Island
+watchdog: "http://[HOST]:[PORT:8097]/health"
+ports:
+  8097/tcp: null
+ports_description:
+  8097/tcp: Direct UI (optional; prefer Ingress sidebar)
+options:
+  pack_prefix: battery_storage_tesla_pack
+  envoy_prefix: sensor.envoy_122039004946
+  ha_token: ""
+  log_level: info
+schema:
+  pack_prefix: str
+  envoy_prefix: str
+  ha_token: password?
+  log_level: list(trace|debug|info|notice|warning|error|fatal)
