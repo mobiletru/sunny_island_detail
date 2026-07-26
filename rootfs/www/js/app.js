@@ -46,13 +46,22 @@
         $('#settings-panel').classList.remove('open');
       }
     });
+    $('#start-charger-btn')?.addEventListener('click', async () => {
+      if (!client) return;
+      try {
+        await client.callService('script', 'start_car_charger');
+        toast('Start charging (Tessie) requested', 'success');
+      } catch (err) {
+        toast(err.message || 'Start charging failed', 'error');
+      }
+    });
     $('#shutdown-charger-btn')?.addEventListener('click', async () => {
       if (!client) return;
       try {
         await client.callService('script', 'shutdown_car_charger');
-        toast('Car charger shutdown requested', 'success');
+        toast('Stop charging (Tessie) requested', 'success');
       } catch (err) {
-        toast(err.message || 'Shutdown failed', 'error');
+        toast(err.message || 'Stop charging failed', 'error');
       }
     });
   }
@@ -181,7 +190,6 @@
     $('#hero-current').textContent = isNaN(current) ? '—' : current.toFixed(1) + ' A';
     $('#hero-volts').textContent = isNaN(volts) ? '—' : volts.toFixed(1) + ' V';
 
-    // SoC ring
     const arc = $('#soc-arc');
     const label = $('#soc-label');
     if (!isNaN(soc)) {
@@ -193,7 +201,6 @@
       arc.classList.toggle('soc-high', soc >= 50);
     }
 
-    // Fault banner
     const banner = $('#fault-banner');
     if (fault && !BAD_STATES.has(fault.toLowerCase()) && fault !== 'No Fault') {
       banner.classList.remove('hidden');
@@ -202,7 +209,6 @@
       banner.classList.add('hidden');
     }
 
-    // Power bar
     const bar = $('#power-bar-fill');
     if (!isNaN(power)) {
       const pct = Math.max(4, Math.min(100, (Math.abs(power) / 10000) * 100));

@@ -46,13 +46,22 @@
         $('#settings-panel').classList.remove('open');
       }
     });
+    $('#start-charger-btn')?.addEventListener('click', async () => {
+      if (!client) return;
+      try {
+        await client.callService('script', 'start_car_charger');
+        toast('Start charging (Tessie) requested', 'success');
+      } catch (err) {
+        toast(err.message || 'Start charging failed', 'error');
+      }
+    });
     $('#shutdown-charger-btn')?.addEventListener('click', async () => {
       if (!client) return;
       try {
         await client.callService('script', 'shutdown_car_charger');
-        toast('Car charger shutdown requested', 'success');
+        toast('Stop charging (Tessie) requested', 'success');
       } catch (err) {
-        toast(err.message || 'Shutdown failed', 'error');
+        toast(err.message || 'Stop charging failed', 'error');
       }
     });
   }
