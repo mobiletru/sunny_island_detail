@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <meta name="theme-color" content="#0f0f12" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-title" content="Sunny Island" />
+  <title>Sunny Island Detail</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/styles.css" />
+</head>
+<body>
+  <div id="auth-overlay" class="auth-overlay hidden">
+    <div class="auth-card">
+      <h2>Connect to Home Assistant</h2>
+      <p>Long-lived access token for live Sunny Island / Tesla pack data.</p>
+      <input id="token-input" type="password" placeholder="eyJhbGciOiJIUzI1NiIs..." autocomplete="off" />
+      <button id="connect-btn" class="btn-primary">Connect</button>
+      <p class="auth-hint">Profile → Security → Long-Lived Access Tokens</p>
+    </div>
+  </div>
+
+  <div class="app">
+    <header class="topbar">
+      <div class="brand">
+        <div class="brand-icon" aria-hidden="true">
+          <svg viewBox="0 0 32 32" width="32" height="32">
+            <rect width="32" height="32" rx="8" fill="#ff7700"/>
+            <path d="M8 20 L16 10 L24 20" fill="none" stroke="#fff" stroke-width="2.5" stroke-linecap="round"/>
+          </svg>
+        </div>
+        <div>
+          <h1 id="app-title">Sunny Island Detail</h1>
+          <p id="app-subtitle" class="subtitle">Tesla pack · EVTV BMS · Enphase</p>
+        </div>
+      </div>
+      <div class="topbar-actions">
+        <span id="connection-status" class="connection-pill" data-status="disconnected">Offline</span>
+        <div class="settings-wrap">
+          <button id="settings-btn" class="icon-btn" aria-label="Settings">⚙</button>
+          <div id="settings-panel" class="settings-panel">
+            <button id="shutdown-charger-btn" class="btn-danger-sm">Stop car charger</button>
+            <button id="disconnect-btn" class="btn-ghost" style="margin-top:0.5rem">Disconnect</button>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <div id="fault-banner" class="fault-banner hidden" role="alert"></div>
+
+    <main class="dashboard">
+      <section class="hero-grid">
+        <article class="card soc-card">
+          <div class="soc-gauge">
+            <svg viewBox="0 0 100 100" class="soc-ring">
+              <circle cx="50" cy="50" r="45" class="soc-track"/>
+              <circle id="soc-arc" cx="50" cy="50" r="45" class="soc-fill" style="stroke-dasharray:283;stroke-dashoffset:283"/>
+            </svg>
+            <div class="soc-center">
+              <span id="soc-label" class="soc-value">—</span>
+              <span class="soc-status">SoC</span>
+            </div>
+          </div>
+          <div class="soc-meta">
+            <span class="card-label">Tesla pack 2-line 12S</span>
+            <p id="hero-status" class="hero-status" data-mode="">—</p>
+            <p id="hero-summary" class="pack-summary" style="margin-top:0.4rem;font-size:0.8rem;color:var(--text-muted);font-family:var(--mono)">—</p>
+          </div>
+        </article>
+
+        <article class="card flow-card">
+          <h2 class="card-title">Power</h2>
+          <div class="bms-flow">
+            <div class="flow-node">
+              <span class="node-label">Charge (+)</span>
+              <span class="node-value" data-metric="charge"><span class="metric-value">—</span></span>
+            </div>
+            <div class="flow-node center">
+              <span class="node-label">Pack</span>
+              <strong id="hero-power" style="font-family:var(--mono);font-size:1.2rem">—</strong>
+            </div>
+            <div class="flow-node">
+              <span class="node-label">Discharge (−)</span>
+              <span class="node-value" data-metric="discharge"><span class="metric-value">—</span></span>
+            </div>
+          </div>
+          <div class="power-bar-track"><div id="power-bar-fill" class="power-bar-fill idle"></div></div>
+          <div class="twin-stats">
+            <div><span>Current</span><strong id="hero-current">—</strong></div>
+            <div><span>Voltage</span><strong id="hero-volts">—</strong></div>
+            <div><span>Sign</span><strong style="font-size:0.75rem">− out · + in</strong></div>
+          </div>
+          <p class="sign-hint">Plant convention: negative = discharging out of pack</p>
+        </article>
+
+        <article class="card spark-card">
+          <h2 class="card-title">Pack power trend</h2>
+          <canvas id="power-sparkline" width="400" height="120"></canvas>
+          <p class="spark-caption">Live window · zero = idle</p>
+        </article>
+      </section>
+
+      <section id="metrics-grid" class="metrics-grid"></section>
+    </main>
+
+    <div id="toast" class="toast" role="status"></div>
+    <footer class="footer">
+      <span>Sunny Island Detail</span>
+      <span>·</span>
+      <span>Home Assistant live data</span>
+      <span>·</span>
+      <span id="year"></span>
+    </footer>
+  </div>
+
+  <script src="js/config.js"></script>
+  <script src="js/ha-client.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>
