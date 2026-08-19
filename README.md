@@ -1,9 +1,9 @@
-# MOVED — retired
+# Retired — use Sunny Island only
 
-This repository is **retired**.
+This repository is **no longer an installable app**.
 
-**Use only:** https://github.com/mobiletru/sunny_island
+All plant apps are combined here:
 
-All-in-one plant app (BMS + live dashboard).
+**https://github.com/mobiletru/sunny_island**
 
-This repo may be deleted.
+Install once: **Settings → Apps → Repositories** → add that URL.
